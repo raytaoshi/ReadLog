@@ -156,7 +156,7 @@ python -m http.server 8000 --bind 127.0.0.1 \
 Serving HTTP on 127.0.0.1 port 8000 (http://127.0.0.1:8000/) ...
 ```
 
-![图片描述](saga/CA证书生成.png)
+![图片描述](assets/CA证书生成.png)
 
 ------
 
@@ -178,7 +178,7 @@ TZ=UTC python provider.py
 Running on https://127.0.0.1:5000
 ```
 
-![图片描述](saga/Provider证书生成.png)
+![图片描述](assets/Provider证书生成.png)
 
 ------
 
@@ -212,7 +212,7 @@ saga/user/alice@mail.com:dummy_agent/agent.json
 saga/user/bob@mail.com:dummy_agent/agent.json
 ```
 
-![图片描述](saga/用户注册.png)
+![图片描述](assets/用户注册.png)
 
 ------
 
@@ -225,7 +225,7 @@ cd ~/project/saga/experiments
 python hello_world.py listen ../user_configs/bob.yaml
 ```
 
-![图片描述](saga/通信Bob.png)
+![图片描述](assets/通信Bob.png)
 
 ------
 
@@ -240,7 +240,7 @@ cd ~/project/saga/experiments
 python hello_world.py query ../user_configs/alice.yaml ../user_configs/bob.yaml
 ```
 
-![图片描述](saga/通信Alice.png)
+![图片描述](assets/通信Alice.png)
 
 ------
 
@@ -284,9 +284,9 @@ db.agents.aggregate([
 ])
 ```
 
-![图片描述](saga/注册情况.png)
+![图片描述](assets/注册情况.png)
 
-![图片描述](saga/查询剩余otk.png)
+![图片描述](assets/查询剩余otk.png)
 
 ------
 
@@ -294,7 +294,7 @@ db.agents.aggregate([
 
 **用户向 Provider 注册自己和 Agent；发起方通过 Provider 获取接收方信息及一次性密钥；两个 Agent 建立令牌与安全连接，随后直接通信。** Provider 不转发后续所有对话。以下是项目图：
 
-![图片描述](saga/项目图.png)
+![图片描述](assets/项目图.png)
 
 
 
@@ -424,7 +424,7 @@ if not CA_CONFIG:
 
 文件中的 `get_agent_material()` 读取 Agent 工作目录下的 `agent.json`(`agent.json`内容如下图)，`serialize()` 和 `deserialize()` 函数负责传输数据的格式转换；
 
-![image-20261020094528700](saga\agentJson.png)
+![image-20261020094528700](assets\agentJson.png)
 
 文件还定义了一个核心类 `Agent`， 是==具体智能体外层的安全通信封装==：
 
@@ -454,7 +454,7 @@ if not CA_CONFIG:
 
 测试用的 `DummyAgent`，它将<TASK_FINISHED>作为任务结束标记，每次调用通常等待一秒后随机返回一句预设回复，用于测试通信与对话流程，不执行真实业务任务。
 
-<img src="saga\DummyAgent.png" alt="image-20261020115207001" style="zoom:80%;" />
+<img src="assets\DummyAgent.png" alt="image-20261020115207001" style="zoom:80%;" />
 
 
 
@@ -467,7 +467,7 @@ if not CA_CONFIG:
 
 所有日志都包含 `HH:MM:SS` 格式的进程本地时间；底层均使用 `print()` 输出到标准输出，不会自动保存文件，也没有日志级别过滤或异常堆栈处理。
 
-![图片描述](saga\logger.png)
+<img src="assets\logger.png" alt="图片描述" style="zoom:67%;" />
 
 
 
@@ -535,7 +535,7 @@ if not CA_CONFIG:
 
 `model` 指定模型名称，`tools` 指定工具列表，`model_type` 指定模型接入类型，`api_base` 指定模型服务地址，`base_agent_type` 指定后端智能体类型，`specific_agent_instruction` 提供额外任务指令，`additional_authorized_imports` 指定智能体生成代码时允许额外导入的模块。
 
-![图片描述](saga\localagentconfig.png)
+![图片描述](assets\localagentconfig.png)
 
 该类继承 `Serializable`，便于从 YAML 等配置文件加载和保存配置；`__post_init__()` 在对象创建后进行校验，当前会检查使用 `OpenAIServerModel` 时是否提供 `api_base`。它本身不加载模型或执行任务，而是为后续创建具体后端提供配置。
 
@@ -615,7 +615,7 @@ if not CA_CONFIG:
 
 ##### 1.1 Cryptographic Overhead
 
-原文结果: <img src="saga\overhead by saga.png" alt="image-20261020133037144" style="zoom: 67%;" />	
+原文结果: <img src="assets\overhead by saga.png" alt="image-20261020133037144" style="zoom: 67%;" />	
 
 我通过自己写一个用户`raytao.yaml`，该用户包括一个智能体`calendar_agent`，得到我的实验结果（只统计了一次注册的时间，会不严谨，但仅供参考）： 
 
@@ -653,11 +653,11 @@ TZ=UTC python user.py --uconfig ../../user_configs/raytao.yaml --register-agents
 
 ###### 1.2.1 用户 OTK 生成的 计算开销
 
-原文：<img src="saga\OTK 生成开销.png" alt="image-20261021131122740" style="zoom:67%;" />
+原文：<img src="assets\OTK 生成开销.png" alt="image-20261021131122740" style="zoom:67%;" />
 
 原文测量数据显示：即使每次生成1000个OTK，每5min生成一次，在8小时内的生成时间总计依旧少于10s；而且 Provider 端的计算成本 （OTK的验证与存储）不超过0.5s。
 
-原文：<img src="saga\图3.png" alt="image-20261021134420691" style="zoom:67%;" />
+原文：<img src="assets\图3.png" alt="image-20261021134420691" style="zoom:67%;" />
 
 **在 1 个发起智能体（initiating agent）与 1 个、10 个和 100 个接收智能体（receiving agents）之间进行访问控制令牌派生（derivation）的计算开销，该开销随令牌生命周期（L）的变化而变化。即使是在较短的生命周期（1 分钟）下，总成本依然保持在较低水平。**
 
