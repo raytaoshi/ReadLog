@@ -23,8 +23,8 @@
 | 状态 | 论文/协议                                                    | 年份 | 会议期刊/协议 | 笔记                 |
 | ---- | ------------------------------------------------------------ | ---- | ------------- | -------------------- |
 | ✅    | SAGA: A Security Architecture for Governing AI Agentic Systems | 2025 | NDSS 2026     | [查看](SAGA/note.md) |
-| 🟡    | AgentNetworkProtocol                                         | 2024 | 持续更新      |                      |
-| 🟡    | Agent2Agent                                                  | 2025 | 持续更新      |                      |
+| 🟡    | AgentNetworkProtocol                                         | 2024 | Standard      |                      |
+| 🟡    | Agent2Agent                                                  | 2025 | Standard      |                      |
 | ⬜    | MAGIQ: A Post-Quantum Multi-Agentic AI Governance System with Provable Security | 2026 | arXiv         |                      |
 
 ---
